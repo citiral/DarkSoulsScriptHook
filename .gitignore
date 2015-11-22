@@ -194,3 +194,9 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+
+#allow some folders
+!Visual Studio 2015 Project/lib/x64
+
+#and files
+!lua53.dll
