@@ -1,0 +1,10 @@
+LIBRARY xinput1_3
+EXPORTS
+	XInputEnable @1
+	XInputGetAudioDeviceIds @2
+	XInputGetBatteryInformation @3
+	XInputGetCapabilities @4
+	XInputGetDSoundAudioDeviceGuids @5
+	XInputGetKeystroke @6
+	XInputGetState @7
+	XInputSetState @8
