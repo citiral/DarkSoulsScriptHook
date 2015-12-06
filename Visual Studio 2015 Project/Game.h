@@ -21,9 +21,10 @@ public:
 	void writeMemory(void* address, T* data);
 	void* getBaseAddress();
 
-	/*Sends a fake key down to the process
-	  the key parameter is a virtual key defined in winUsers.h*/
-	void sendKeyDown(int key);
+	/*
+	sends a key press according to the key defintions for an XINPUT_STATE
+	*/
+	void pressKey(unsigned short key);
 
 	/*Registers the class with lua*/
 	virtual void registerLua(lua_State* l) = 0;
@@ -37,6 +38,7 @@ protected:
 	HANDLE _process;
 	DWORD _thread;
 	HWND _window;
+	HANDLE _inputNamedpipe;
 	void* _basePointer;
 };
 

@@ -8,11 +8,13 @@
 
 Game::Game()
 {
+	_inputNamedpipe = CreateFile(TEXT("\\\\.\\mailslot\\dslua"), GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 }
 
 
 Game::~Game()
 {
+	CloseHandle(_inputNamedpipe);
 }
 
 void* Game::getBaseAddress()
@@ -20,20 +22,19 @@ void* Game::getBaseAddress()
 	return _basePointer;
 }
 
-void Game::sendKeyDown(int key)
+void Game::pressKey(unsigned short key)
 {
-	/*D_OUT("Window is " << _window);
-
-	INPUT input;
-	input.type = INPUT_KEYBOARD;
-	input.ki.wVk = key;
-	input.ki.wScan = key;
-	input.ki.dwFlags = 0;
-	input.ki.time = 0;
-
-	SendInput(1, &input, sizeof(INPUT));*/
-	AttachThreadInput(GetCurrentThreadId(), _thread, true);
-	//SendMessageW(_window, WM_KEYDOWN, key, 0b0000000000000001000000000000000);
+	unsigned char data[2];
+	data[0] = key >> 8;
+	data[1] = key;
+	DWORD written;
+	//send the key press
+	WriteFile(_inputNamedpipe, data, 2, &written, NULL);
+	//and then release it
+	data[0] = 0;
+	data[1] = 0;
+	WriteFile(_inputNamedpipe, data, 2, &written, NULL);
+	D_OUT("written " << written << " bytes.");
 }
 
 bool Game::fetchProcess(const wchar_t* processname)
@@ -55,7 +56,6 @@ bool Game::fetchProcess(const wchar_t* processname)
 	while (processfound) {
 		char filename[MAX_PATH];
 		int converted;
-
 		//found a process
 		if (wcscmp(entry.szExeFile, processname) == 0) {
 			//open it
@@ -75,6 +75,7 @@ void Game::fetchBasePointer()
 	//first get the name of the process
 	wchar_t filename[255];
 	GetModuleFileNameEx(_process, NULL, filename, sizeof(wchar_t) * 255);
+
 	//then get a list of all handles
 	HMODULE handles[128];
 	unsigned long filledbuffer;
@@ -89,7 +90,6 @@ void Game::fetchBasePointer()
 		GetModuleFileNameEx(_process, handles[i], modulename, sizeof(wchar_t) * 255);
 		if (wcscmp(filename, modulename) == 0) {
 			_basePointer = handles[i];
-			break;
 		}
 	}
 }

@@ -1,0 +1,15 @@
+Keys = {}
+Keys.UP		= 0x0001
+Keys.DOWN	= 0x0002
+Keys.LEFT	= 0x0004
+Keys.RIGHT	= 0x0008
+Keys.START	= 0x0010
+Keys.SELECT = 0x0020
+Keys.L3 	= 0x0040
+Keys.R3 	= 0x0080
+Keys.L2 	= 0x0100
+Keys.R2 	= 0x0200
+Keys.A 		= 0x1000
+Keys.B 		= 0x2000
+Keys.X 		= 0x4000
+Keys.Y 		= 0x8000

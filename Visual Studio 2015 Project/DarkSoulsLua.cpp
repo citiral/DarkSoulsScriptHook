@@ -17,7 +17,6 @@ int main()
 			game = new DarkSouls();
 		} if (selection == '2') {
 			game = new DarkSouls2();
-			game->sendKeyDown(VK_SPACE); 
 		}
 		else {
 			return 0;

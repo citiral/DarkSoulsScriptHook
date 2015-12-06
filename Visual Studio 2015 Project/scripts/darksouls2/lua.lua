@@ -28,3 +28,4 @@ end
 dofile("scripts\\darksouls2\\player.lua")
 dofile("scripts\\darksouls2\\inventory.lua")
 dofile("scripts\\darksouls2\\items.lua")
+dofile("scripts\\darksouls2\\input.lua")

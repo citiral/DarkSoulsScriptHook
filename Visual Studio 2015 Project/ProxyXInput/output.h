@@ -6,8 +6,7 @@
 std::fstream output;
 #pragma data_seg ()*/
 
-std::fstream output;
 void initOutput()
 {
-	output.open("./debug.txt", std::ios_base::out);
+	//output.open("./debug.txt", std::ios_base::out);
 }

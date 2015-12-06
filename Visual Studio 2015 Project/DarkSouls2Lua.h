@@ -19,9 +19,13 @@ public:
 
 	int writeInt(lua_State* l/*, void* ptr, int offset, int data*/);
 	int readInt(lua_State* l/*, void* ptr, int offset*/);
+	int writePtr(lua_State* l/*, void* ptr, int offset, void* data*/);
+	int readPtr(lua_State* l/*, void* ptr, int offset*/);
 	int writeShort(lua_State* l/*, void* ptr, int offset, int data*/);
 	int readShort(lua_State* l/*, void* ptr, int offset*/);
-	
+	int pressKey(lua_State* l/*, uint key*/);
+	int baseAddress(lua_State* l);
+
 	static const char className[];
 	static const char tableName[];
 	static const Luna<DarkSouls2Lua>::RegType Register[];

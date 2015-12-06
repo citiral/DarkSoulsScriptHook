@@ -19,6 +19,29 @@ DarkSouls2Lua::~DarkSouls2Lua()
 
 }
 
+int DarkSouls2Lua::writePtr(lua_State* l/*, void* ptr, int offset, int data*/)
+{
+	void* ptr = lua_touserdata(l, 2);
+	int offset = luaL_checkinteger(l, 3);
+	void* data = lua_touserdata(l, 4);
+
+	_ds2->writeMemory<void*>((char*)ptr + offset, &data);
+
+	return 0;
+}
+
+int DarkSouls2Lua::readPtr(lua_State* l/*, void* ptr, int offset*/)
+{
+	void* ptr = lua_touserdata(l, 2);
+	int offset = luaL_checknumber(l, 3);
+	void* data;
+
+	_ds2->readMemory<void*>((char*)ptr + offset, &data);
+
+	lua_pushlightuserdata(l, data);
+	return 1;
+}
+
 int DarkSouls2Lua::writeInt(lua_State* l/*, void* ptr, int offset, int data*/)
 {
 	void* ptr = lua_touserdata(l, 2);
@@ -65,12 +88,32 @@ int DarkSouls2Lua::readShort(lua_State* l/*, void* ptr, int offset*/)
 	return 1;
 }
 
+int DarkSouls2Lua::pressKey(lua_State * l)
+{
+	int key = luaL_checkinteger(l, 2);
+	
+	_ds2->pressKey(key);
+
+	return 0;
+}
+
+int DarkSouls2Lua::baseAddress(lua_State * l)
+{
+	lua_pushlightuserdata(l, _ds2->getBaseAddress());
+
+	return 1;
+}
+
 const char DarkSouls2Lua::className[] = "DarkSouls2";
 const char DarkSouls2Lua::tableName[] = "DarkSouls2Table";
 const Luna<DarkSouls2Lua>::RegType DarkSouls2Lua::Register[] = {
-	{ "writeInt", &DarkSouls2Lua::writeInt },	
+	{ "writeInt", &DarkSouls2Lua::writeInt },
 	{ "readInt", &DarkSouls2Lua::readInt },
+	{ "writePtr", &DarkSouls2Lua::writePtr },
+	{ "readPtr", &DarkSouls2Lua::readPtr },
 	{ "writeShort", &DarkSouls2Lua::writeShort },
 	{ "readShort", &DarkSouls2Lua::readShort },
+	{ "pressKey", &DarkSouls2Lua::pressKey },
+	{ "baseAddress", &DarkSouls2Lua::baseAddress, },
 	{ 0 }
 };
