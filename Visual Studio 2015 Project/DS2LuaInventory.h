@@ -14,10 +14,9 @@ public:
 	~DS2LuaInventory();
 
 	//lua functions
-	int getItemBasePointer(lua_State* l/*, index*/);
-	int getItem(lua_State* l/*, index*/);
-	int setItem(lua_State* l/*, index, id*/);
-	int getBasePointer(lua_State* l);
+	int getItemBasePointer(lua_State* l);
+	int getHeadBasePointer(lua_State* l);
+	int getWeaponBasePointer(lua_State* l);
 
 	static const char className[];
 	static const char tableName[];

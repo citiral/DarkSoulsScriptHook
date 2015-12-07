@@ -18,44 +18,28 @@ DS2LuaInventory::~DS2LuaInventory()
 
 int DS2LuaInventory::getItemBasePointer(lua_State * l)
 {
-	int index = luaL_checknumber(l, 2);
-	void* data = _inv->getItemBasePointer(index);
-
-	lua_pushlightuserdata(l, data);
+	lua_pushlightuserdata(l, _inv->getItemBasePointer());
 	return 1;
 }
 
-int DS2LuaInventory::getItem(lua_State* l/*, index*/)
+int DS2LuaInventory::getHeadBasePointer(lua_State * l)
 {
-	int index = luaL_checknumber(l, 2);
-	int data = _inv->getItem(index);
-
-	lua_pushnumber(l, data);
+	lua_pushlightuserdata(l, _inv->getHeadBasePointer());
 	return 1;
 }
 
-int DS2LuaInventory::setItem(lua_State* l/*, index, id*/)
+int DS2LuaInventory::getWeaponBasePointer(lua_State * l)
 {
-	int index = luaL_checknumber(l, 2);
-	int id = luaL_checknumber(l, 3);
-
-	_inv->setItem(index, id);
-	
-	return 0;
-}
-
-int DS2LuaInventory::getBasePointer(lua_State * l)
-{
-	lua_pushlightuserdata(l, _inv->getBasePointer());
+	lua_pushlightuserdata(l, _inv->getWeaponBasePointer());
 	return 1;
 }
+
 
 const char DS2LuaInventory::className[] = "Inventory";
 const char DS2LuaInventory::tableName[] = "InventoryTable";
 const Luna<DS2LuaInventory>::RegType DS2LuaInventory::Register[] = {
-	/*{ "getItem", &DS2LuaInventory::getItem },*/
-	/*{ "setItem", &DS2LuaInventory::setItem },*/
 	{ "getItemBasePointer", &DS2LuaInventory::getItemBasePointer },
-	{ "getBasePointer", &DS2LuaInventory::getBasePointer },
+	{ "getHeadBasePointer", &DS2LuaInventory::getHeadBasePointer },
+	{ "getWeaponBasePointer", &DS2LuaInventory::getWeaponBasePointer },
 	{ 0 }
-};
+}; 

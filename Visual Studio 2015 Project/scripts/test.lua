@@ -14,18 +14,30 @@ dofile("scripts\\darksouls2\\lua.lua")
 --print(" item count is " .. count)
 
 selected = inventory:selectedItem()
-print("selected item is " .. string.format("0x%X", selected))
-index = inventory:findItem(selected)
-print("index is " .. index)
+item = inventory:firstHead()
+index = 0
+print("base is " .. string.format("%x", ds2:fromPtr(item)))
+while not ds2:isNull(item) do
+	print("item " .. index .. " is " .. IdToString(inventory:getId(item)))
+	item = inventory:nextItem(item)
+	index = index + 1 
+end
+
+inventory:setQuantity(inventory:findItem(60151000), 20)
+
+--inventory:setId(inventory:findItem( 0x039B4F30 ), 0x030A32C0)
+
+--index = inventory:findItem(selected)
+--print("index is " .. index)
 --inventory:setQuantity(index, 40)
 --print("count is " .. inventory:getQuantity(index))
 --print("replacing item ")
 --inventory:setItem(index, 0x039C9B38)
 
-print("hp is " .. player:getHealth())
+--print("hp is " .. player:getHealth())
 --print("vigor is " .. player:getVigor())
 --for i = 0, 120 do
-	ds2:pressKey(Keys.LEFT)
+--	ds2:pressKey(Keys.LEFT)
 --end
 --for i = 0, 2000 do
 --	ds2:pressKey(Keys.A)

@@ -10,15 +10,17 @@ public:
 
 	void init(DarkSouls2* ds);
 
-	int getItem(int index);
-	void setItem(int index, int item);
-	void* getItemBasePointer(int index);
-	void* getBasePointer();
+	void* getItemBasePointer();
+	void* getHeadBasePointer();
+	void* getWeaponBasePointer();
 	
 private:
 	void fetchBasePointer();
 
 	void* _inventory;
+	void* _chestStart;
+	void* _headStart;
+	void* _weaponStart;
 	DarkSouls2* _ds;
 };
 

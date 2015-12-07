@@ -25,6 +25,10 @@ public:
 	int readShort(lua_State* l/*, void* ptr, int offset*/);
 	int pressKey(lua_State* l/*, uint key*/);
 	int baseAddress(lua_State* l);
+	int isNull(lua_State* l/*, void* ptr */);
+	int toPtr(lua_State* l/*, long ptr */);
+	int fromPtr(lua_State* l/*, void* ptr*/);
+	int addPtr(lua_State* l/*, void* ptr, int add*/);
 
 	static const char className[];
 	static const char tableName[];

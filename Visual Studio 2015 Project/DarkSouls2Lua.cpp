@@ -104,6 +104,37 @@ int DarkSouls2Lua::baseAddress(lua_State * l)
 	return 1;
 }
 
+int DarkSouls2Lua::isNull(lua_State * l)
+{
+	void* ptr = lua_touserdata(l, 2);
+	lua_pushboolean(l, ptr == nullptr);
+	return 1;
+}
+
+int DarkSouls2Lua::toPtr(lua_State * l)
+{
+	long long val = luaL_checknumber(l, 2);
+	lua_pushlightuserdata(l, (void*)val);
+	return 1;
+}
+
+int DarkSouls2Lua::fromPtr(lua_State * l)
+{
+	void* val = lua_touserdata(l, 2);
+
+	lua_pushnumber(l, (long long)val);
+	return 1;
+}
+
+int DarkSouls2Lua::addPtr(lua_State * l)
+{
+	void* val = lua_touserdata(l, 2);
+	long long add = luaL_checknumber(l, 3);
+
+	lua_pushlightuserdata(l, ((char*)val) + add);
+	return 1;
+}
+
 const char DarkSouls2Lua::className[] = "DarkSouls2";
 const char DarkSouls2Lua::tableName[] = "DarkSouls2Table";
 const Luna<DarkSouls2Lua>::RegType DarkSouls2Lua::Register[] = {
@@ -115,5 +146,9 @@ const Luna<DarkSouls2Lua>::RegType DarkSouls2Lua::Register[] = {
 	{ "readShort", &DarkSouls2Lua::readShort },
 	{ "pressKey", &DarkSouls2Lua::pressKey },
 	{ "baseAddress", &DarkSouls2Lua::baseAddress, },
+	{ "isNull", &DarkSouls2Lua::isNull, },
+	{ "toPtr", &DarkSouls2Lua::toPtr },
+	{ "fromPtr", &DarkSouls2Lua::fromPtr },
+	{ "addPtr", &DarkSouls2Lua::addPtr },
 	{ 0 }
 };
