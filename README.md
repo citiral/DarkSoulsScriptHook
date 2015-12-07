@@ -24,9 +24,3 @@ It is a simple visual studio 2015 project, so building should be fairly painless
 General:
 Set up more lua libraries to allow for taking screenshots,..
 completely map the inventory to the lua process
-
-DS2:
-Find a way to get the size of the inventory :)
-
-DS1:
-Everything
