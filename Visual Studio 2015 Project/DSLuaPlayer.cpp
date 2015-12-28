@@ -15,24 +15,23 @@ DSLuaPlayer::~DSLuaPlayer()
 {
 }
 
-int DSLuaPlayer::getHealth(lua_State* L)
+int DSLuaPlayer::getBasePointer(lua_State * L)
 {
-	lua_pushnumber(L, _player->getHealth());
+	lua_pushlightuserdata(L, _player->getBasePointer());
 	return 1;
 }
 
-int DSLuaPlayer::setHealth(lua_State * L)
+int DSLuaPlayer::getBasePointer2(lua_State * L)
 {
-	int health = luaL_checkinteger(L, 2);
-	_player->setHealth(health);
-	return 0;
+	lua_pushlightuserdata(L, _player->getBasePointer2());
+	return 1;
 }
 
 
 const char DSLuaPlayer::className[] = "Player";
 const char DSLuaPlayer::tableName[] = "PlayerTable";
 const Luna<DSLuaPlayer>::RegType DSLuaPlayer::Register[] = {
-	{ "getHealth", &DSLuaPlayer::getHealth },
-	{ "setHealth", &DSLuaPlayer::setHealth },
+	{ "getBasePointer", &DSLuaPlayer::getBasePointer },
+	{ "getBasePointer2", &DSLuaPlayer::getBasePointer2 },
 	{ 0 }
 };

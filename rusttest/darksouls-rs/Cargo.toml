@@ -1,0 +1,13 @@
+[package]
+name = "darksouls-rs"
+version = "0.1.0"
+authors = ["Olivier de Schaetzen <olivier4@telenet.be>"]
+
+[lib]
+name = "xinput1_3"
+crate-type = ["dylib"]
+
+[dependencies]
+winapi = "*"
+kernel32-sys = "*"
+libc = "*"

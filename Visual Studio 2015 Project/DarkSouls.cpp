@@ -2,10 +2,10 @@
 #include "DarkSouls.h"
 #include "luna.h"
 #include "DSLuaPlayer.h"
-
+#include "GameLua.h"
 DarkSouls::DarkSouls()
 {
-	if (fetchProcess(L"DARKSOULS.exe")) {
+	if (fetchProcess(L"DARKSOULS.exe", L"DARK SOULS")) {
 		D_OUT("Process found and opened.");
 		fetchBasePointer();
 	} else {
@@ -32,6 +32,12 @@ DSPlayer* DarkSouls::getPlayer()
 
 void DarkSouls::registerLua(lua_State* l)
 {
+	Luna<DSLuaPlayer>::Register(l);
+	Luna<GameLua>::Register(l);
+	
 	Luna<DSLuaPlayer>::create(l, getPlayer());
 	lua_setglobal(l, "player");
+
+	Luna<GameLua>::create(l, this);
+	lua_setglobal(l, "ds");
 }

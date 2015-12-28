@@ -16,24 +16,26 @@ DSPlayer::~DSPlayer()
 void DSPlayer::init(DarkSouls* ds)
 {
 	_ds = ds;
-	getPlayerPointer();
+	calculateBasePointer();
 }
 
-int DSPlayer::getHealth()
+void* DSPlayer::getBasePointer()
 {
-	int h = 0;
-	_ds->readMemory<int>((char*)_playerPointer + 0x2d4, &h);
-	return h;
+	return _playerPointer;
 }
 
-void DSPlayer::setHealth(int health)
+void* DSPlayer::getBasePointer2()
 {
-	_ds->writeMemory<int>((char*)_playerPointer + 0x2d4, &health);
+	return _playerPointer2;
 }
 
-void DSPlayer::getPlayerPointer()
+void DSPlayer::calculateBasePointer()
 {
-	_ds->readMemory<void*>((char*)_ds->getBaseAddress() + 0x00EDF9E8, &_playerPointer);
-	_ds->readMemory<void*>(_playerPointer, &_playerPointer);
+	_ds->readMemory<void*>((char*)_ds->getBaseAddress() + 0x00F7A644, &_playerPointer);
+	_ds->readMemory<void*>((char*)_playerPointer + 0x3C, &_playerPointer);
+
+	_ds->readMemory<void*>((char*)_ds->getBaseAddress() + 0x00F75700, &_playerPointer2);
+	_ds->readMemory<void*>((char*)_playerPointer2 + 0x8, &_playerPointer2);
+
 	D_OUT("Player pointer is " << _playerPointer << ".");
 }

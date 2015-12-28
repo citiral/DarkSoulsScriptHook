@@ -1,7 +1,12 @@
 #define WIN32_LEAN_AND_MEAN		
 #include <Windows.h>
 #include "output.h"
+#include "Memory.h"
 #include "ProxyXInput.h"
+
+#define DARKSOULS
+//#define DARKSOULS2
+
 
 // global variables
 #pragma data_seg (".d3d9_shared")
@@ -9,7 +14,7 @@ HINSTANCE gl_hOriginalDll;
 HINSTANCE gl_hThisInstance;
 HANDLE _inputNamedpipe;
 #pragma data_seg ()
-
+void PatchCode();
 BOOL WINAPI DllMain(HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)
 {
 	// to avoid compiler lvl4 warnings 
@@ -21,7 +26,7 @@ BOOL WINAPI DllMain(HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved
 	case DLL_PROCESS_ATTACH: InitInstance(hModule); break;
 	case DLL_PROCESS_DETACH: ExitInstance(); break;
 
-	case DLL_THREAD_ATTACH:  break;
+	case DLL_THREAD_ATTACH: PatchCode();  break;
 	case DLL_THREAD_DETACH:  break;
 	}
 	return TRUE;
@@ -44,6 +49,7 @@ void LoadOriginalDll()
 {
 	char buffer[MAX_PATH];
 
+
 	// Getting path to system dir and to d3d8.dll
 	GetSystemDirectory(buffer, MAX_PATH);
 
@@ -58,10 +64,85 @@ void LoadOriginalDll()
 	{
 		::ExitProcess(0); // exit the hard way
 	}
-
-	_inputNamedpipe = CreateMailslot("\\\\.\\mailslot\\dslua", 1024, 0, NULL);
-	//_inputNamedpipe = CreateNamedPipe(TEXT("\\\\.\\pipe\\dslua"), PIPE_ACCESS_DUPLEX | PIPE_TYPE_BYTE | PIPE_READMODE_BYTE, PIPE_WAIT, PIPE_UNLIMITED_INSTANCES, 1024 * 16, 1024 * 16, NMPWAIT_USE_DEFAULT_WAIT, NULL);
 }
+
+unsigned char code[] = {0xC3};//{ 0x89, 0x83, 0x68, 0x01, 0x00, 0x00, 0xC3 };
+void InjectFunctionCallback()
+{
+	//((void(*)())&code)();
+	std::ofstream out;
+
+	out.open("debugging.txt", std::fstream::out | std::fstream::app);
+	out << "function called addr is " << InjectFunctionCallback << "\n";
+
+	out.close();
+
+}
+
+#ifdef DARKSOULS
+void PatchCode()
+{
+	/*int size = 5;
+	
+	//remove damage taking ability
+	unsigned long long target = (unsigned char*)code - (unsigned char*)0x7FF6D739721A;
+	std::ofstream out;
+
+	out.open("debugging.txt", std::fstream::out | std::fstream::app);
+	out << "offset is " << (void*) target << "\n";
+
+	out.close();*/
+
+	/*writeByte(0x16721A, 0xE8);
+	writeByte(0x16721A + 1, target >> 4);
+	writeByte(0x16721A + 2, target >> 3);
+	writeByte(0x16721A + 3, target >> 2);
+	writeByte(0x16721A + 4, target >> 1);
+	writeByte(0x16721A + 5, target);*/
+	/*writeByte(0x16721A, 0x90);
+	writeByte(0x16721A + 1, 0x90);
+	writeByte(0x16721A + 2, 0x90);
+	writeByte(0x16721A + 3, 0x90);
+	writeByte(0x16721A + 4, 0x90);
+	writeByte(0x16721A + 5, 0x90);*/
+
+	/*writeByte(0x16721A, 0xFF);
+	writeByte(0x16721A, 0x15);
+	writeByte(0x16721A, 0x15);*/
+}
+#endif
+#ifdef DARKSOULS2
+void PatchCode()
+{
+	/*int size = 5;
+
+	//remove damage taking ability
+	unsigned long long target = (unsigned char*)code - (unsigned char*)0x7FF6D739721A;
+	std::ofstream out;
+
+	out.open("debugging.txt", std::fstream::out | std::fstream::app);
+	out << "offset is " << (void*) target << "\n";
+
+	out.close();*/
+
+	/*writeByte(0x16721A, 0xE8);
+	writeByte(0x16721A + 1, target >> 4);
+	writeByte(0x16721A + 2, target >> 3);
+	writeByte(0x16721A + 3, target >> 2);
+	writeByte(0x16721A + 4, target >> 1);
+	writeByte(0x16721A + 5, target);*/
+	/*writeByte(0x16721A, 0x90);
+	writeByte(0x16721A + 1, 0x90);
+	writeByte(0x16721A + 2, 0x90);
+	writeByte(0x16721A + 3, 0x90);
+	writeByte(0x16721A + 4, 0x90);
+	writeByte(0x16721A + 5, 0x90);*/
+
+	/*writeByte(0x16721A, 0xFF);
+	writeByte(0x16721A, 0x15);
+	writeByte(0x16721A, 0x15);*/
+}
+#endif
 
 void InitInstance(HANDLE hModule)
 {
@@ -72,6 +153,9 @@ void InitInstance(HANDLE hModule)
 	gl_hThisInstance = (HINSTANCE)hModule;
 
 	LoadOriginalDll();
+	//create the mailbox
+	_inputNamedpipe = CreateMailslot("\\\\.\\mailslot\\dslua", 1024, 0, NULL);
+	//patch the code
 }
 
 void ExitInstance()
@@ -128,16 +212,13 @@ DWORD WINAPI XInputGetKeystroke(DWORD dwUserIndex, DWORD dwReserved, PXINPUT_KEY
 DWORD WINAPI XInputGetState(DWORD dwUserIndex, XINPUT_STATE *pState)
 {
 	if (!gl_hOriginalDll) LoadOriginalDll();
+	
+	//this is late enough in the execution to patch the code. Of course we don't want to do that multiple times TODO move this to a cleaner location
+	
+	
 	OrigXInputGetState func = (OrigXInputGetState)GetProcAddress(gl_hOriginalDll, "XInputGetState");
 	DWORD result = func(dwUserIndex, pState);
-
-		//DWORD waitingBytes;
-		//PeekNamedPipe(_inputNamedpipe, NULL, 0, NULL, &waitingBytes, NULL);
-
-		//handle only the bytes waiting right now (prevents unlimited looping)
-		//while (waitingBytes >= 2) {
-		//	waitingBytes -= 2;
-		
+	
 	unsigned long read = 0;
 	unsigned char data[2];
 

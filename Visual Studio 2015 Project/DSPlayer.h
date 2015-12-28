@@ -10,13 +10,14 @@ public:
 
 	void init(DarkSouls* ds);
 
-	int getHealth();
-	void setHealth(int health);
+	void* getBasePointer();
+	void* getBasePointer2();
 
 private:
-	void getPlayerPointer();
+	void calculateBasePointer();
 
 	void* _playerPointer;
+	void* _playerPointer2;
 	DarkSouls* _ds;
 };
 

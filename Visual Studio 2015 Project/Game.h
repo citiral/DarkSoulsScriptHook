@@ -33,13 +33,14 @@ protected:
 	/*
 	Memory related functions and variables
 	*/
-	bool fetchProcess(const wchar_t* processname);
+	bool fetchProcess(const wchar_t* processname, const wchar_t* windowname);
 	void fetchBasePointer();
 	HANDLE _process;
 	DWORD _thread;
 	HWND _window;
 	HANDLE _inputNamedpipe;
 	void* _basePointer;
+	//void* _xinputPointer;
 };
 
 template <class T>

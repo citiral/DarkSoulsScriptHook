@@ -17,8 +17,8 @@ public:
 	~DSLuaPlayer();
 
 	//wrapped functions
-	int getHealth(lua_State* L);
-	int setHealth(lua_State* L/*int health*/);
+	int getBasePointer(lua_State* L);
+	int getBasePointer2(lua_State* L);
 
 	static const char className[];
 	static const char tableName[];

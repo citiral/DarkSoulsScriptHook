@@ -7,15 +7,15 @@ extern "C" {
 #include "lualib.h"
 }
 
-class DarkSouls2;
+class Game;
 
-class DarkSouls2Lua
+class GameLua
 {
 public:
-	DarkSouls2Lua(DarkSouls2* ds2);
-	DarkSouls2Lua(lua_State* l);
+	GameLua(Game* ds2);
+	GameLua(lua_State* l);
 	
-	~DarkSouls2Lua();
+	~GameLua();
 
 	int writeInt(lua_State* l/*, void* ptr, int offset, int data*/);
 	int readInt(lua_State* l/*, void* ptr, int offset*/);
@@ -23,6 +23,8 @@ public:
 	int readPtr(lua_State* l/*, void* ptr, int offset*/);
 	int writeShort(lua_State* l/*, void* ptr, int offset, int data*/);
 	int readShort(lua_State* l/*, void* ptr, int offset*/);
+	int writeByte(lua_State* l/*, void* ptr, int offset, unsigned char data*/);
+	int readByte(lua_State* l/*, void* ptr, int offset*/);
 	int pressKey(lua_State* l/*, uint key*/);
 	int baseAddress(lua_State* l);
 	int isNull(lua_State* l/*, void* ptr */);
@@ -32,9 +34,9 @@ public:
 
 	static const char className[];
 	static const char tableName[];
-	static const Luna<DarkSouls2Lua>::RegType Register[];
+	static const Luna<GameLua>::RegType Register[];
 
 private:
-	DarkSouls2* _ds2;
+	Game* _game;
 };
 

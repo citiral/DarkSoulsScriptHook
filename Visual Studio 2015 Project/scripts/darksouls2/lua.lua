@@ -24,6 +24,14 @@ function generateReadShort(base, offset)
 	end
 end
 
+function ds2:writeBytes(offset, ...)
+	local arg={...}
+	for i,v in ipairs(arg) do
+		print("writing " .. i )
+    	ds2:writeByte(ds2:baseAddress(), offset + i - 1, v)
+    end
+end
+
 --include neccessary files
 dofile("scripts\\darksouls2\\player.lua")
 dofile("scripts\\darksouls2\\inventory.lua")

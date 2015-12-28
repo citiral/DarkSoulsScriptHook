@@ -37,10 +37,10 @@ void Game::pressKey(unsigned short key)
 	D_OUT("written " << written << " bytes.");
 }
 
-bool Game::fetchProcess(const wchar_t* processname)
+bool Game::fetchProcess(const wchar_t* processname, const wchar_t* windowname)
 {
 	//first, fetch the window
-	_window = FindWindowW(NULL, L"DARK SOULS II");
+	_window = FindWindowW(NULL, windowname);
 	D_OUT("Window is " << _window);
 	_thread = GetWindowThreadProcessId(_window, NULL);
 	D_OUT("Thread is " << _thread);
@@ -74,8 +74,14 @@ void Game::fetchBasePointer()
 {
 	//first get the name of the process
 	wchar_t filename[255];
+	wchar_t xinput[255];
 	GetModuleFileNameEx(_process, NULL, filename, sizeof(wchar_t) * 255);
-
+	
+	//get the xinput filename
+	//wcscpy_s(xinput, filename);
+	//wchar_t* lastindex = wcsrchr(xinput, '\\');
+	//wcsncpy_s(lastindex+1,  sizeof(char) * 14, L"XINPUT1_3.dll", sizeof(char) * 14);
+	
 	//then get a list of all handles
 	HMODULE handles[128];
 	unsigned long filledbuffer;
@@ -90,6 +96,11 @@ void Game::fetchBasePointer()
 		GetModuleFileNameEx(_process, handles[i], modulename, sizeof(wchar_t) * 255);
 		if (wcscmp(filename, modulename) == 0) {
 			_basePointer = handles[i];
-		}
+		}/* else if (wcscmp(xinput, modulename) == 0) {
+			_xinputPointer = handles[i];
+			D_OUT("got xinput! " << _xinputPointer);
+			
+			D_OUT("callback is " << GetProcAddress(LoadLibrary(xinput), "XInputGetState"));
+		}*/
 	}
 }

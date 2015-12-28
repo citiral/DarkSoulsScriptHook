@@ -63,10 +63,10 @@
     <ClInclude Include="DS2LuaPlayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DarkSouls2Lua.h">
+    <ClInclude Include="DS2LuaInventory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DS2LuaInventory.h">
+    <ClInclude Include="GameLua.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -104,11 +104,11 @@
     <ClCompile Include="DS2LuaPlayer.cpp">
       <Filter>Source Files\Dark Souls 2</Filter>
     </ClCompile>
-    <ClCompile Include="DarkSouls2Lua.cpp">
-      <Filter>Source Files\Dark Souls 2</Filter>
-    </ClCompile>
     <ClCompile Include="DS2LuaInventory.cpp">
       <Filter>Source Files\Dark Souls 2</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLua.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

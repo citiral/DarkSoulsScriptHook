@@ -1,13 +1,13 @@
 #include "stdafx.h"
 #include "DarkSouls2.h"
 #include "luna.h"
-#include "DarkSouls2Lua.h"
+#include "GameLua.h"
 #include "DS2LuaPlayer.h"
 #include "DS2LuaInventory.h"
 
 DarkSouls2::DarkSouls2()
 {
-	if (fetchProcess(L"DarkSoulsII.exe")) {
+	if (fetchProcess(L"DarkSoulsII.exe", L"DARK SOULS II")) {
 		D_OUT("Process found and opened.");
 		fetchBasePointer();
 	}
@@ -32,7 +32,7 @@ void DarkSouls2::initWrappers()
 void DarkSouls2::registerLua(lua_State* l)
 {
 	Luna<DS2LuaPlayer>::Register(l);
-	Luna<DarkSouls2Lua>::Register(l);
+	Luna<GameLua>::Register(l);
 	Luna<DS2LuaInventory>::Register(l);
 
 	Luna<DS2LuaPlayer>::create(l, &_player);
@@ -41,7 +41,7 @@ void DarkSouls2::registerLua(lua_State* l)
 	Luna<DS2LuaInventory>::create(l, &_inventory);
 	lua_setglobal(l, "inventory");
 
-	Luna<DarkSouls2Lua>::create(l, this);
+	Luna<GameLua>::create(l, this);
 	lua_setglobal(l, "ds2");
 
 

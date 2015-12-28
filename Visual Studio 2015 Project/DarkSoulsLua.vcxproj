@@ -161,7 +161,7 @@
   <ItemGroup>
     <ClInclude Include="DarkSouls.h" />
     <ClInclude Include="DarkSouls2.h" />
-    <ClInclude Include="DarkSouls2Lua.h" />
+    <ClInclude Include="GameLua.h" />
     <ClInclude Include="DS2Inventory.h" />
     <ClInclude Include="DS2LuaInventory.h" />
     <ClInclude Include="DS2LuaPlayer.h" />
@@ -180,7 +180,7 @@
   <ItemGroup>
     <ClCompile Include="DarkSouls.cpp" />
     <ClCompile Include="DarkSouls2.cpp" />
-    <ClCompile Include="DarkSouls2Lua.cpp" />
+    <ClCompile Include="GameLua.cpp" />
     <ClCompile Include="DarkSoulsLua.cpp" />
     <ClCompile Include="DS2Inventory.cpp" />
     <ClCompile Include="DS2LuaInventory.cpp" />

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="ProxyD3d9.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="..\..\vs\d3d11proxy\d3d11proxy\d3d9proxy\hookIDirect3DDevice9.cpp" />
+    <ClCompile Include="..\..\vs\d3d11proxy\d3d11proxy\d3d9proxy\hookIDirect3D9.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ProxyD3d9.h" />
+    <ClInclude Include="..\..\vs\d3d11proxy\d3d11proxy\d3d9proxy\hookIDirect3D9.h" />
+    <ClInclude Include="..\..\vs\d3d11proxy\d3d11proxy\d3d9proxy\hookIDirect3DDevice9.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="dllmain.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\vs\d3d11proxy\d3d11proxy\d3d9proxy\d3d9proxy.def" />
+  </ItemGroup>
+</Project>

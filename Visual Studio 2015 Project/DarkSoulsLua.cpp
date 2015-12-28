@@ -15,7 +15,7 @@ int main()
 
 		if (selection == '1') {
 			game = new DarkSouls();
-		} if (selection == '2') {
+		} else if (selection == '2') {
 			game = new DarkSouls2();
 		}
 		else {
@@ -27,6 +27,7 @@ int main()
 
 		getchar();
 	}
+	getchar();
     return 0;
 }
 

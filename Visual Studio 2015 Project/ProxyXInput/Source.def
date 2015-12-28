@@ -8,3 +8,4 @@ EXPORTS
 	XInputGetKeystroke @8
 	XInputGetState @2
 	XInputSetState @3
+	InjectFunctionCallback @9
