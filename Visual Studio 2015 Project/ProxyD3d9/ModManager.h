@@ -11,6 +11,11 @@ struct ModMenuEntry {
 	std::function<void()> function;
 };
 
+struct ConsoleEntry {
+	std::string text;
+	float timeout;
+};
+
 class ModManager
 {
 public:
@@ -18,6 +23,9 @@ public:
 	~ModManager();
 
 	void update(float dt);
+
+	void addConsoleEntry(std::string text, float timeout = 5);
+	void clearConsoleEntries();
 
 private:
 	void handleInput();
@@ -32,5 +40,6 @@ private:
 	int _selectedItem;
 	std::vector<ModMenuEntry> _menuItems;
 	std::vector<ModEntry> _modEntries;
+	std::vector<ConsoleEntry> _consoleEntries;
 };
 

@@ -23,6 +23,16 @@ void ModManager::update(float dt)
 		drawMenu();
 	}
 	updateMods(dt);
+
+	//update the console entries
+	for (auto iter = _consoleEntries.begin(); iter != _consoleEntries.end(); iter++) {
+		iter->timeout -= dt;
+		if (iter->timeout < 0) {
+			auto curiter = iter;
+			iter--;
+			_consoleEntries.erase(curiter);
+		}
+	}
 }
 
 void ModManager::handleInput()
@@ -49,6 +59,7 @@ void ModManager::handleInput()
 
 void ModManager::drawMenu()
 {
+	//draw all entries of the normal menu
 	int index = 0;
 	for (auto iter = _menuItems.begin(); iter != _menuItems.end(); iter++) {
 		if (index == _selectedItem)
@@ -57,6 +68,13 @@ void ModManager::drawMenu()
 			drawing::drawText((iter->text).c_str(), 10, index * 30 + 10);
 		index++;
 	}
+
+	//draw all console entries
+	for (auto iter = _consoleEntries.begin(); iter != _consoleEntries.end(); iter++) {
+		drawing::drawText(iter->text.c_str(), 10, index * 30 + 10);
+		index++;
+	}
+
 	std::stringstream str;
 
 	drawing::drawText(str.str().c_str(), 10, index * 30 + 10);
@@ -116,4 +134,14 @@ void ModManager::toggleMod(int modindex, int entryindex)
 	else {
 		_menuItems[entryindex].text = "[disabled] " + _modEntries[modindex].getValue("name");
 	}
+}
+
+void ModManager::addConsoleEntry(std::string text, float timeout)
+{
+	_consoleEntries.push_back({ text, timeout });
+}
+
+void ModManager::clearConsoleEntries()
+{
+	_consoleEntries.clear();
 }

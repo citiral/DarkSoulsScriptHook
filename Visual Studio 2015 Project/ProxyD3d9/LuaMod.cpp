@@ -44,7 +44,7 @@ void LuaMod::stop()
 
 void LuaMod::update(float dt)
 {
-	lua_getglobal(_l, "update");
+	lua_getglobal(_l, "InternalUpdate");
 	lua_pushnumber(_l, dt);
 	if (lua_pcall(_l, 1, 0, 0)) {
 		printString(lua_tostring(_l, -1));

@@ -42,6 +42,7 @@ namespace FunctionCalling {
 			call func;
 			mov retval, eax;
 		}
+		return retval;
 	}
 
 	template<class A1, class A2, class A3, class A4>
@@ -55,6 +56,41 @@ namespace FunctionCalling {
 			mov esi, val_esi;
 			call func;
 			mov retval, eax;
+		}
+		return retval;
+	}
+	
+	template<class A1, class A2>
+	void call_void_edx_1arg_pop_1(void(*func)(), A1 val_edx, A2 arg1)
+	{
+		_asm {
+			mov edx, val_edx;
+			push arg1;
+			call func;
+			pop edx;
+		}
+	}
+
+	template<class A1, class A2, class A3>
+	void call_void_eax_edx_1arg_pop_1(void(*func)(), A1 val_eax, A2 val_edx, A3 arg1)
+	{
+		_asm {
+			mov eax, val_eax;
+			mov edx, val_edx;
+			push arg1;
+			call func;
+			pop edx;
+		}
+	}
+
+	template<class A1, class A2, class A3>
+	void call_void_ecx_edx_edi(void(*func)(), A1 val_ecx, A2 val_edx, A3 val_edi)
+	{
+		_asm {
+			mov ecx, val_ecx;
+			mov edx, val_edx;
+			mov edi, val_edi;
+			call func;
 		}
 	}
 }

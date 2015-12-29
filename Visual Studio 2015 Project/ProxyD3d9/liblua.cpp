@@ -2,6 +2,8 @@
 #include "debug.h"
 #include <sstream>
 
+ModManager* _mm;
+
 int lua_ptrToString(lua_State* l)
 {
 	void* ptr = lua_touserdata(l, 1);
